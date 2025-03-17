@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SugarPlush – Delivery Tracking 🎀</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <h1 class="logo"> 🧸 SugarPlush 🎀</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="shopping.html">Shop Plushies</a>
+            <a href="about.html">About Us</a>
+        </nav>
+    </header>
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #ffdde1, #ee9ca7);
+            color: #333;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        /* Header */
+        header {
+            background: url('logo_pic.jpeg') no-repeat center center;
+            background-size: cover;
+            height: 140px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            width: 100%;
+        }
+        
+        /* Logo */
+        .logo {
+            font-size: 2.8rem;
+            font-weight: bold;
+            color: #ff007f;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+            -webkit-text-stroke: 1px white;
+        }
+        
+        /* Navigation Bar */
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            background: rgba(255, 182, 193, 0.6);
+            padding: 8px 0;
+            border-radius: 8px;
+            position: relative;
+            width: fit-content;
+            margin: auto;
+        }
+        
+        nav a {
+            color: #ff007f;
+            font-weight: bold;
+            font-size: 1rem;
+            text-decoration: none;
+            padding: 6px 12px;
+        }
+        
+        nav a:hover {
+            color: #b60d61;
+        }
+
+        footer {
+            position: relative;
+            width: 100%;
+            padding: 10px;
+            background: rgba(255, 182, 193, 0.9);
+            text-align: center;
+            margin-top: 50px; 
+        }
+        .order-container {
+                display: flex;
+                justify-content: space-between;
+                gap: 20px;
+            }
+        .order-summary, .order-items {
+                flex: 1;
+                max-width: 48%;
+        }
+        .order-summary {
+            background: rgba(255, 255, 255, 0.8); /* Light background */
+            border-radius: 12px;
+            padding: 20px;
+            max-width: 600px;
+            margin: 20px auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow */
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Centers content horizontally */
+            justify-content: center; /* Centers content vertically */
+
+        }
+        
+        .order-summary h3 {
+            font-size:1.7rem;
+            color: #000000;
+            margin-bottom: 15px;
+        }
+        
+        .order-summary p {
+            font-size: 1.2rem;
+            color: #333;
+            font-weight: bold;
+            margin: 8px 0;
+        }
+        
+        .order-summary span {
+            color: #b60d61;
+            font-weight: 600;
+        }
+        
+        .order-summary strong {
+            color: #ff007f;
+        }        
+       
+        .order-items h3{
+            font-size: 1.7rem;
+        }
+    </style>
+
+    <div class="order-container">
+    <br>
+    <section class="order-summary">
+        <h3>📝 Order Details</h3>
+        <p><strong>Order ID:</strong> <span id="order-id">Loading...</span></p>
+        <p><strong>Total Price:</strong> $<span id="total-price">Loading...</span></p>
+        <p><strong>Truck Assigned:</strong> <span id="truck-id">Loading...</span> (<span id="truck-code">Loading...</span>)</p>
+        <p><strong>Scheduled Delivery:</strong> <span id="delivery-date">Loading...</span> at <span id="delivery-time">Loading...</span></p>
+    </section>
+
+    <section class="order-items">
+    <h3>📦 Ordered Items</h3>
+    <ul id="order-items">Loading...</ul>
+    </section>
+    </div>
+
+    <h2>📍 Delivery Map</h2>
+    <section class="map-container">
+        <div id="map"></div>
+    </section>
+   
+
+
+    <script src="map.js"></script> 
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const params = new URLSearchParams(window.location.search);
+            const orderId = params.get("order_id");
+    
+            if (!orderId) {
+                alert("No order details found. Redirecting to homepage.");
+                window.location.href = "index.html";
+                return;
+            }
+    
+            console.log(`Fetching details for Order ID: ${orderId}`);
+    
+            fetch(`get_order_details.php?order_id=${orderId}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log("✅ Order details received:", data);
+    
+                    if (data.status !== "success") {
+                        console.error("API error:", data.message);
+                        return;
+                    }
+    
+                    document.getElementById("delivery-date").innerText = data.delivery_date ?? "Not scheduled";
+                    document.getElementById("delivery-time").innerText = data.delivery_time ?? "Not scheduled";
+    
+                    document.getElementById("order-id").innerText = data.order_id || "N/A";
+                    document.getElementById("total-price").innerText = `$${data.total_price || "0.00"}`;
+                    document.getElementById("truck-id").innerText = data.truck_details?.truck_id ?? "N/A";
+                    document.getElementById("truck-code").innerText = data.truck_details?.truck_code ?? "N/A";
+    
+                    // 🧸 🛒 Display Ordered Items with Images
+                    let itemsContainer = document.getElementById("order-items");
+                    itemsContainer.innerHTML = ""; 
+    
+                    if (data.items.length > 0) {
+                        data.items.forEach(item => {
+                            let itemElement = document.createElement("li");
+                            itemElement.classList.add("order-item");
+    
+                            itemElement.innerHTML = `
+                                <img src="${item.image_url}" alt="${item.item_name}" class="order-item-img">
+                                <p><strong>${item.item_name}</strong></p>
+                                <p>Price: $${item.price}</p>
+                                <p>Quantity: ${item.quantity}</p>
+                            `;
+                            itemsContainer.appendChild(itemElement);
+                        });
+                    } else {
+                        itemsContainer.innerHTML = "<p>No items found.</p>";
+                    }
+    
+                    // 🗺️ Set up the Map if Trip Details Exist
+                    if (data.trip_details && data.customer_details) {
+                        let sourceLocation = data.trip_details.source;
+                        let destinationLocation = `${data.customer_details.street}, ${data.customer_details.city}, ${data.customer_details.state}, ${data.customer_details.country}`;
+    
+                        if (!sourceLocation || !destinationLocation) {
+                            console.error("Invalid location data:", sourceLocation, destinationLocation);
+                            return;
+                        }
+    
+                        initMap(sourceLocation, destinationLocation);
+                    } else {
+                        console.error("Missing trip or customer details.");
+                    }
+                })
+                .catch(error => console.error("❌ Error fetching order details:", error));
+        });
+    </script>
+    
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdzd6hg2mNf19UK0KJsoP62RRNqgaB3i4&callback=initMap" async defer ></script>
+    
+    <footer>
+        <p>© 2025 SugarPlush. All Rights Reserved. 🎀</p>
+    </footer>
+</body>
+</html>

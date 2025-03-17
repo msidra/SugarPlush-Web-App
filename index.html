@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SugarPlush – Pick your purrfect plushie! 🧸💖</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="animations.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+
+    <style>
+
+        .profile-container {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            display: inline-block;
+        }
+
+        #profile-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid #ff69b4;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        #profile-icon:hover {
+            transform: scale(1.1);
+        }
+
+        /* Profile Dropdown Menu */
+        #profile-menu {
+            display: none;
+            position: absolute;
+            top: 70px;
+            right: 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            width: 150px;
+            text-align: left;
+            border: 2px solid #ff69b4;
+        }
+
+        /* Profile Menu Links */
+        #profile-menu a {
+            display: block;
+            text-decoration: none;
+            color: #b60d61;
+            padding: 10px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        #profile-menu a:hover {
+            background: #ff69b4;
+            color: white;
+            border-radius: 8px;
+        }
+
+        /* Show Dropdown */
+        #profile-menu.visible {
+            display: block;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 50px;
+            font-size: 1.5em;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .btn {
+            background: linear-gradient(to right, #ff69b4, #ff1493);
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 25px;
+            display: inline-block;
+            margin-top: 20px;
+            font-size: 1.2em;
+            transition: 0.3s ease-in-out;
+        }
+
+        .btn:hover {
+            background: #ff1493;
+            transform: scale(1.1);
+        }
+
+        /* Ensure the navbar items, including Sign In & Sign Up, are aligned properly */
+nav {
+    display: flex;
+    align-items: center; /* Vertically centers all links */
+    justify-content: space-between;
+    padding: 10px 20px;
+}
+
+/* Fix Sign In & Sign Up alignment */
+#auth-links {
+    display: flex;
+    gap: 15px; /* Adjust spacing */
+    align-items: center; /* Ensures they align with the other nav items */
+    position: relative; /* Keeps them in place */
+    top: 2px; /* Moves them down to align with the rest */
+}
+
+/* Style for each link */
+#auth-links a {
+    font-size:17px;
+    font-weight: bold;
+    color: #ff007f;
+    text-decoration: none;
+    padding: 8px 12px;
+    background: rgba(255, 182, 193, 0.6);
+    border-radius: 8px;
+    transition: 0.3s ease-in-out;
+    display: inline-block;
+}
+
+#auth-links a:hover {
+    background: #ff69b4;
+    color: white;
+}
+
+        
+                
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1 class="logo">🧸 SugarPlush 🎀</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="shopping.html">Shop Plushies</a>
+            <a href="about.html">About Us</a>
+            <a href="search.html">Search Delivered Orders</a>
+            <a href="db_maintain.html" id="db-maintain-link" style="display: none;">DB Maintain</a>
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    let userEmail = localStorage.getItem("loggedInUser");
+                    let dbMaintainLink = document.getElementById("db-maintain-link");
+            
+                    if (userEmail === "4amaryam@gmail.com") {
+                        dbMaintainLink.style.display = "inline-block"; 
+                    }
+                });
+               
+            </script>
+    
+            <!-- Profile Container -->
+            <div class="profile-container" id="profile-container" style="display: none;">
+                <img src="https://www.legeland.dk/media/produkter/Squishmallows/Squishmallows_30_cm_Peety_-_Den_Pink_plettede_Gris__/squishmallows_30_cm_peety_den_pink_plettede_gris_1/squishmallows_30_cm_peety_den_pink_plettede_gris_1_full.png" 
+                    id="profile-icon" 
+                    onclick="toggleProfileMenu()" 
+                    alt="Profile Icon">
+                <div id="profile-menu" class="hidden">
+                    <a href="#" onclick="logout()">Logout</a>
+                </div>
+            </div>
+
+            <!-- Auth Links (Sign In / Sign Up) -->
+            <div id="auth-links">
+                <a href="signin.html">Sign In</a>
+                <a href="signup.html">Sign Up</a>
+            </div>
+
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h2>Welcome to SugarPlush💕</h2>
+            <p>Find your fluffy friend today! 🧸🎀</p>
+            <a href="shopping.html" class="btn">Start Shopping 🛍️</a>
+        </section>
+    </main>
+    <footer>
+        <p>© 2025 SugarPlush. All Rights Reserved. 🎀</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let loggedInUser = localStorage.getItem("loggedInUser");
+            let profileContainer = document.getElementById("profile-container");
+            let authLinks = document.getElementById("auth-links");
+        
+            if (loggedInUser) {
+                profileContainer.style.display = "inline-block"; 
+                authLinks.style.display = "none"; 
+            } else {
+                profileContainer.style.display = "none"; 
+                authLinks.style.display = "block"; 
+            }
+        });
+        
+        function toggleProfileMenu() {
+            let profileMenu = document.getElementById("profile-menu");
+            profileMenu.classList.toggle("visible");
+        }
+        
+        function logout() {
+            localStorage.removeItem("loggedInUser");
+            localStorage.removeItem("user_id");
+            window.location.href = "index.html";
+        }
+        
+        
+    </script>
+
+</body>
+</html>

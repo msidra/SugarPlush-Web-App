@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insert Data</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <h1 class="logo">🧸 SugarPlush 🎀</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href='db_maintain.html'> DB Maintenance</a>
+            <a href="logout.php">Logout</a>
+        </nav>
+    </header>
+
+    <section class="db-container">
+        <h2>📥 Insert Data</h2>
+    
+        <label for="tableSelect">Choose a Table:</label>
+        <select id="tableSelect"></select>
+    
+        <div id="fieldsContainer"></div>
+    
+        <button class="db-btn" onclick="insertRecord()">Insert</button>
+    </section>
+    
+
+    <script>
+        function fetchTables() {
+            fetch("db_select.php?fetch_tables=true")
+                .then(response => response.json())
+                .then(data => {
+                    let tableSelect = document.getElementById("tableSelect");
+                    tableSelect.innerHTML = "";
+
+                    data.tables.forEach(table => {
+                        let option = document.createElement("option");
+                        option.value = table;
+                        option.textContent = table;
+                        tableSelect.appendChild(option);
+                    });
+                })
+                .catch(error => console.error("Error fetching tables:", error));
+        }
+
+        function loadTableFields() {
+            let tableName = document.getElementById("tableSelect").value;
+            fetch(`db_select.php?table=${tableName}`)
+                .then(response => response.json())
+                .then(data => {
+                    let fieldsContainer = document.getElementById("fieldsContainer");
+                    fieldsContainer.innerHTML = "";
+
+                    data.columns.forEach(column => {
+                        let input = document.createElement("input");
+                        input.type = "text";
+                        input.placeholder = column.name;
+                        input.dataset.column = column.name;
+                        fieldsContainer.appendChild(input);
+                        fieldsContainer.appendChild(document.createElement("br"));
+                    });
+                });
+        }
+
+        function insertRecord() {
+            let tableName = document.getElementById("tableSelect").value;
+            let inputs = document.querySelectorAll("#fieldsContainer input");
+
+            let data = {};
+            inputs.forEach(input => {
+                data[input.dataset.column] = input.value;
+            });
+
+            fetch("db_insert.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ table: tableName, data: data }),
+            })
+            .then(response => response.json())
+            .then(data => alert(data.message))
+            .catch(error => console.error("Error inserting data:", error));
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            fetchTables();
+            document.getElementById("tableSelect").addEventListener("change", loadTableFields);
+        });
+    </script>
+</body>
+</html>

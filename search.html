@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Orders – SugarPlush</title>
+    <script src="search.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+    <style>
+        .search-container {
+            width: 50%;
+            margin: 50px auto;
+            background: #ffe6f2;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0px 4px 12px rgba(255, 20, 147, 0.2);
+            border: 3px solid #ff69b4;
+        }
+
+        label {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #b60d61;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        select, input {
+            padding: 12px;
+            font-size: 1rem;
+            border: 2px solid #ff69b4;
+            border-radius: 8px;
+            width: 80%;
+            margin-bottom: 15px;
+        }
+
+        button {
+            background: linear-gradient(to right, #ff69b4, #ff1493);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 100%;
+            font-weight: bold;
+            box-shadow: 0px 4px 10px rgba(255, 20, 147, 0.3);
+        }
+
+        button:hover {
+            background: linear-gradient(to right, #ff1493, #ff69b4);
+            transform: scale(1.05);
+            box-shadow: 0px 6px 15px rgba(255, 20, 147, 0.5);
+        }
+
+        /* Search Results */
+        .results-container {
+            width: 60%;
+            margin: auto;
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 12px rgba(255, 20, 147, 0.2);
+            border: 2px solid #ff69b4;
+            display: none;
+        }
+
+        .results-container h3 {
+            font-size: 1.5rem;
+            color: #b60d61;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <h1 class="logo">🧸 SugarPlush 🎀</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="logout.php">Logout</a>
+        </nav>
+    </header>
+
+    <section class="search-container">
+        <label for="searchType">🔍 Search by:</label>
+        <select id="searchType">
+            <option value="user_id">User ID</option>
+            <option value="order_id">Order ID</option>
+        </select>
+
+        <input type="text" id="searchQuery" placeholder="Enter value..." required>
+        <button onclick="searchOrders()">Search</button>
+    </section>
+
+    <div class="results-container" id="searchResults">
+        <h3>📋 Search Results:</h3>
+        <p>No results found.</p>
+    </div>
+
+    <footer>
+        <p>© 2025 SugarPlush. All Rights Reserved. 🎀</p>
+    </footer>
+
+</body>
+</html>

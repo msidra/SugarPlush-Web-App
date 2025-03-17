@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Checkout - SugarPlush</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+    <style>
+        header {
+            background: url('logo_pic.jpeg') no-repeat center center;
+            background-size: cover;
+            height: 140px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            width: 100%;
+        }
+        
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            background: rgba(255, 182, 193, 0.6);
+            padding: 8px 0;
+            border-radius: 8px;
+            position: relative;
+            width: fit-content;
+            margin: auto;
+        }
+        
+        nav a {
+            color: #ff007f;
+            font-weight: bold;
+            font-size: 1rem;
+            text-decoration: none;
+            padding: 6px 12px;
+        }
+        
+        nav a:hover {
+            color: #b60d61;
+        }
+
+        /* Payment Section */
+        .payment-container {
+            width: 50%;
+            margin: 50px auto;
+            background: #ffe6f2;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0px 4px 12px rgba(255, 20, 147, 0.2);
+            border: 3px solid #ff69b4;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #b60d61;
+        }
+
+        label {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #b60d61;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        select, input {
+            padding: 12px;
+            font-size: 1rem;
+            border: 2px solid #ff69b4;
+            border-radius: 8px;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .total {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #b60d61;
+            margin-top: 10px;
+        }
+
+        .checkout-btn {
+            background: linear-gradient(to right, #ff69b4, #ff1493);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 100%;
+            font-weight: bold;
+            box-shadow: 0px 4px 10px rgba(255, 20, 147, 0.3);
+        }
+
+        .checkout-btn:hover {
+            background: linear-gradient(to right, #ff1493, #ff69b4);
+            transform: scale(1.05);
+            box-shadow: 0px 6px 15px rgba(255, 20, 147, 0.5);
+        }
+
+        footer {
+            margin-top: 30px;
+            padding: 15px;
+            background: linear-gradient(to right, #ee9ca7, #ffdde1);
+            color: white;
+            text-align: center;
+            font-size: 1rem;
+            border-top: 3px solid #ff69b4;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <h1 class="logo">🧸 SugarPlush 🎀</h1>
+        <nav>
+        <a href="index.html">Home</a>
+        <a href="shopping.html">Shop Plushies</a>
+        <a href="checkout.html">Checkout</a>
+        <a href="logout.php">Logout</a>
+    </nav>
+    </header>
+
+    <section class="payment-container">
+        <h2>🔒 Choose a Payment Method</h2>
+    
+        <label for="saved-card">💳 Saved Card:</label>
+        <select id="saved-card" name="saved-card" title="Select your saved card">
+            <option value="">Loading your saved cards...</option>
+        </select>
+    
+        <label for="delivery-date">📅 Select Delivery Date:</label>
+        <input type="date" id="delivery-date" name="delivery-date" required min="<?= date('Y-m-d', strtotime('+1 day')) ?>">
+
+        <label for="delivery-time">⏰ Select Delivery Time:</label>
+        <input type="time" id="delivery-time" name="delivery-time" required>
+
+        <p class="total"><strong>Total:</strong> $<span id="total-amount">0.00</span></p>
+
+    
+        <button id="process-payment" class="checkout-btn">Process Payment ❤️</button>
+    
+        <p id="error-message" style="color: red; display: none;"></p>
+    </section>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Get the delivery date input field
+            let deliveryDateInput = document.getElementById("delivery-date");
+    
+            if (deliveryDateInput) {
+                let today = new Date();
+                today.setDate(today.getDate() + 1); 
+    
+                let minDate = today.toISOString().split("T")[0]; 
+                deliveryDateInput.setAttribute("min", minDate);
+            }
+        });
+    </script>
+    
+
+        <p id="error-message" style="color: red; display: none;"></p>
+    </section>
+
+    <footer>
+        <p>© 2025 SugarPlush. All Rights Reserved. 🎀</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="cart.js"></script>
+
+</body>
+</html>

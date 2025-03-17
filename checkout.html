@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout – SugarPlush 🧸</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="checkout.js" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1 class="logo">🧸 SugarPlush 🎀</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="shopping.html">Shop Plushies</a>
+            <a href="delivery.html">Delivery</a>
+            <a href="signin.html">Sign In</a>
+            <a href="signup.html">Sign Up</a>
+        </nav>
+    </header>
+
+    <section class="cart-container">
+        <h2>🛍️ Your Final Cart</h2>
+        <div id="cart-items"></div>
+
+        <div class="cart-summary">
+    <h3>Total: <span id="cart-total">$0</span></h3>
+</div>
+
+    </section>
+
+    <div class="cart-actions">
+        <button class="edit-cart-btn" onclick="goBackToShopping()">🛒 Edit Cart</button>
+        <button class="proceed-btn" onclick="checkLoginBeforeCheckout()">Proceed to Checkout 🎀</button>      
+    </div>    
+
+    <footer>
+        <p>© 2025 SugarPlush. All Rights Reserved. 🎀</p>
+    </footer>
+</body>
+</html>

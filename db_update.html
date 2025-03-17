@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Data</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+    <style>
+        .db-container #fieldsContainer {
+            display: flex;
+            flex-direction: column;
+            width: 80%;
+            margin: auto;
+        }
+    
+        .db-container .form-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .db-container .form-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 5px; 
+        }
+        
+        .db-container label {
+            width: 30%;
+            text-align: left;
+            font-weight: bold;
+            color: #b60d61;
+        }
+        
+        .db-container input {
+            width: 65%;
+            padding: 5px; 
+            font-size: 1rem;
+            border: 2px solid #ff69b4;
+            border-radius: 8px;
+        }        
+    </style>
+    
+</head>
+<body>
+    <header class="header">
+        <h1 class="logo">🧸 SugarPlush 🎀</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href='db_maintain.html'> DB Maintenance</a>
+            <a href="logout.php">Logout</a>
+        </nav>
+    </header>
+
+    <section class="db-container">
+        <h2>Update Records</h2>
+
+        <label for="tableSelect">Choose a table:</label>
+        <select id="tableSelect" class="db-dropdown" onchange="loadTableRecords()"></select>
+        <br>
+        <label for="recordSelect">Choose a record:</label>
+        <select id="recordSelect" class="db-dropdown" onchange="populateFields()"></select>
+
+        <div id="fieldsContainer"></div>
+
+        <button class="db-btn" onclick="updateRecord()">Update</button>
+        <p id="statusMessage"></p>
+    </section>
+
+    <script>
+        let primaryKeyColumn = "";
+
+        function fetchTables() {
+            fetch("db_select.php?fetch_tables=true")
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.tables) {
+                        console.error("Error fetching tables:", data);
+                        return;
+                    }
+
+                    let tableSelect = document.getElementById("tableSelect");
+                    tableSelect.innerHTML = "";
+
+                    data.tables.forEach(table => {
+                        let option = document.createElement("option");
+                        option.value = table;
+                        option.textContent = table;
+                        tableSelect.appendChild(option);
+                    });
+
+                    if (data.tables.length > 0) {
+                        loadTableRecords();
+                    }
+                })
+                .catch(error => console.error("Error fetching tables:", error));
+        }
+
+        function loadTableRecords() {
+            let tableName = document.getElementById("tableSelect").value;
+            fetch(`db_select.php?table=${tableName}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.records || data.records.length === 0) {
+                        console.error("No records found for", tableName);
+                        return;
+                    }
+
+                    let recordSelect = document.getElementById("recordSelect");
+                    recordSelect.innerHTML = "";
+
+                    primaryKeyColumn = data.columns[0].name; 
+
+                    data.records.forEach(record => {
+                        let option = document.createElement("option");
+                        option.value = record[primaryKeyColumn]; 
+                        option.textContent = `ID: ${record[primaryKeyColumn]} - ${JSON.stringify(record)}`;
+                        recordSelect.appendChild(option);
+                    });
+
+                    populateFields();
+                })
+                .catch(error => console.error("Error fetching table records:", error));
+        }
+
+        function populateFields() {
+            let recordSelect = document.getElementById("recordSelect");
+            let selectedText = recordSelect.options[recordSelect.selectedIndex].textContent;
+        
+            try {
+                let recordData = JSON.parse(selectedText.split(" - ")[1]);
+                let fieldsContainer = document.getElementById("fieldsContainer");
+                fieldsContainer.innerHTML = "";
+        
+                Object.keys(recordData).forEach(column => {
+                    let formGroup = document.createElement("div");
+                    formGroup.classList.add("form-group");
+        
+                    let label = document.createElement("label");
+                    label.textContent = column;
+        
+                    let input = document.createElement("input");
+                    input.type = "text";
+                    input.value = recordData[column];
+                    input.dataset.column = column;
+        
+                    formGroup.appendChild(label);
+                    formGroup.appendChild(input);
+                    fieldsContainer.appendChild(formGroup);
+                });
+            } catch (error) {
+                console.error("Error parsing record data:", error);
+            }
+        }        
+
+        function updateRecord() {
+            let tableName = document.getElementById("tableSelect").value;
+            let recordId = document.getElementById("recordSelect").value;
+            let inputs = document.querySelectorAll("#fieldsContainer input");
+
+            let data = {};
+            inputs.forEach(input => {
+                data[input.dataset.column] = input.value;
+            });
+
+            fetch("db_update.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ table: tableName, primaryKeyColumn: primaryKeyColumn, data: data }),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Server error: " + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                let statusMessage = document.getElementById("statusMessage");
+                statusMessage.textContent = data.message;
+                if (data.status === "success") {
+                    loadTableRecords(); 
+                }
+            })
+            .catch(error => console.error("Error updating data:", error));
+        }
+
+        document.addEventListener("DOMContentLoaded", fetchTables);
+    </script>
+</body>
+</html>

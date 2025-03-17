@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up – SugarPlush</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+    <style>
+        .signup-container {
+            width: 50%;
+            margin: 40px auto;
+            background: #ffe6f2;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0px 4px 12px rgba(255, 20, 147, 0.2);
+            border: 3px solid #ff69b4;
+        }
+
+        .signup-container input {
+            width: 100%;
+            padding: 12px;
+            margin: 5px 0;
+            border-radius: 8px;
+            border: 2px solid #ff69b4;
+            font-size: 1rem;
+            display: block;
+            box-sizing: border-box;
+        }
+
+        .error-text {
+            color: red;
+            font-size: 0.85rem;
+            margin-top: 2px;
+            text-align: left;
+            display: block;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .input-row div {
+            flex: 1;
+        }
+
+        button {
+            background: #ff69b4;
+            color: white;
+            padding: 12px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #ff1493;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="logo">🧸 SugarPlush 🎀</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="signin.html">Sign In</a>
+        </nav>
+    </header>
+
+    <section class="signup-container">
+        <h2>🎀 Join Us In Plushie Land! 🎀</h2>
+        <form id="signup-form" action="signup.php" method="POST">
+            
+            <!-- Full Name -->
+            <label>Full Name</label>
+            <input type="text" id="full-name" name="full_name" placeholder="Enter your full name">
+            <small id="name-error" class="error-text"></small>
+
+            <!-- Email -->
+            <label>Email</label>
+            <input type="email" id="signup-email" name="email" placeholder="Enter your email">
+            <small id="email-error" class="error-text"></small>
+
+            <!-- Password -->
+            <label>Password</label>
+            <input type="password" id="signup-password" name="password" placeholder="Enter a password">
+            <small id="password-error" class="error-text"></small>
+
+            <!-- Confirm Password -->
+            <label>Confirm Password</label>
+            <input type="password" id="confirm-password" name="confirm_password" placeholder="Re-enter password">
+            <small id="confirm-password-error" class="error-text"></small>
+
+            <label>Phone number</label>
+            <input type="phone" id="phone-number" name="phone_number" placeholder="Enter your phone number">
+            <small id="phone-error" class="error-text"></small>
+
+            <h3>📍 Address Details</h3>
+            <div class="input-row">
+                <div>
+                    <label>Street</label>
+                    <input type="text" id="street" name="street" placeholder="123 Cupcake Street">
+                    <small id="street-error" class="error-text"></small>
+                </div>
+
+                <div>
+                    <label>City</label>
+                    <input type="text" id="city" name="city" placeholder="Toronto">
+                    <small id="city-error" class="error-text"></small>
+                </div>
+            </div>
+
+            <div class="input-row">
+                <div>
+                    <label>State/Province</label>
+                    <input type="text" id="state" name="state" placeholder="Ontario">
+                    <small id="state-error" class="error-text"></small>
+                </div>
+
+                <div>
+                    <label>Country</label>
+                    <input type="text" id="country" name="country" placeholder="Funland">
+                    <small id="country-error" class="error-text"></small>
+                </div>
+            </div>
+
+            <label>ZIP Code</label>
+            <input type="text" id="zip" name="zip" placeholder="C0P 5A4">
+            <small id="zip-error" class="error-text"></small>
+
+            <h3>💳 Card Information</h3>
+            <div class="input-row">
+                <div>
+                    <label>Card Number</label>
+                    <input type="text" id="card-number" name="card_number" placeholder="4242 4242 4242 4242">
+                    <small id="card-error" class="error-text"></small>
+                </div>
+
+                <div>
+                    <label>Expiry Date (MM/YY)</label>
+                    <input type="text" id="expiry-date" name="expiry_date" placeholder="MM/YY">
+                    <small id="expiry-error" class="error-text"></small>
+                </div>
+
+                <div>
+                    <label>CVV</label>
+                    <input type="text" id="cvv" name="cvv" placeholder="123">
+                    <small id="cvv-error" class="error-text"></small>
+                </div>
+            </div>
+
+            <button type="submit">Sign Up 🎀</button>
+        </form>
+    </section>
+
+    <script>
+        document.getElementById("signup-form").addEventListener("submit", function(event) {
+            let hasError = false;
+        
+            document.querySelectorAll(".error-text").forEach(el => el.innerText = "");
+        
+            function showError(id, message) {
+                document.getElementById(id).innerText = message;
+                hasError = true;
+            }
+        
+            function checkEmptyField(fieldId, errorId, errorMessage) {
+                const fieldValue = document.getElementById(fieldId).value.trim();
+                if (fieldValue === "") {
+                    showError(errorId, errorMessage);
+                }
+            }
+        
+            // Check if fields are empty
+            checkEmptyField("full-name", "name-error", "Full Name is required!");
+            checkEmptyField("signup-email", "email-error", "Email is required!");
+            checkEmptyField("signup-password", "password-error", "Password is required!");
+            checkEmptyField("confirm-password", "confirm-password-error", "Confirm Password is required!");
+            checkEmptyField("phone-number", "phone-error", "Phone Number is required!");
+            checkEmptyField("street", "street-error", "Street is required!");
+            checkEmptyField("city", "city-error", "City is required!");
+            checkEmptyField("state", "state-error", "State/Province is required!");
+            checkEmptyField("country", "country-error", "Country is required!");
+            checkEmptyField("zip", "zip-error", "ZIP Code is required!");
+            checkEmptyField("card-number", "card-error", "Card Number is required!");
+            checkEmptyField("expiry-date", "expiry-error", "Expiry Date is required!");
+            checkEmptyField("cvv", "cvv-error", "CVV is required!");
+        
+            // Validate Phone Number (must be 10 digits)
+            const phoneNumber = document.getElementById("phone-number").value.trim();
+            if (!/^\d{10}$/.test(phoneNumber)) {
+                showError("phone-error", "Phone number must be exactly 10 digits!");
+            }
+        
+            // Validate Email Format
+            const email = document.getElementById("signup-email").value.trim();
+            if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+                showError("email-error", "Enter a valid email!");
+            }
+        
+            // Validate Password Match
+            const password = document.getElementById("signup-password").value.trim();
+            const confirmPassword = document.getElementById("confirm-password").value.trim();
+            if (password !== confirmPassword) {
+                showError("confirm-password-error", "Passwords do not match!");
+            }
+        
+            // Validate ZIP Code Format (Canada-style A1A 1A1)
+            const zip = document.getElementById("zip").value.trim();
+            if (!/^[A-Za-z]\d[A-Za-z] ?\d[A-Za-z]\d$/.test(zip)) {
+                showError("zip-error", "Invalid ZIP code format!");
+            }
+        
+            // Validate Card Number (must be 16 digits)
+            const cardNumber = document.getElementById("card-number").value.replace(/\s+/g, '');
+            if (!/^\d{16}$/.test(cardNumber)) {
+                showError("card-error", "Invalid card number!");
+            }
+        
+            // Validate Expiry Date (MM/YY format)
+            const expiryDate = document.getElementById("expiry-date").value.trim();
+            if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(expiryDate)) {
+                showError("expiry-error", "Invalid format (MM/YY)!");
+            }
+        
+            // Validate CVV (must be 3 digits)
+            const cvv = document.getElementById("cvv").value.trim();
+            if (!/^\d{3}$/.test(cvv)) {
+                showError("cvv-error", "Invalid CVV!");
+            }
+        
+            if (hasError) event.preventDefault();
+        });
+        
+    </script>
+
+    <footer>
+        <p>© 2025 SugarPlush. All Rights Reserved. 🎀</p>
+    </footer>
+
+</body>
+</html>

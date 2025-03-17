@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Records</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+    <style>
+        .db-container.select-records {
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .db-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        .users-table {
+            table-layout: auto;
+        }
+        
+        .db-table th, .db-table td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 2px solid #ff69b4;
+            width: 15%; 
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1 class="logo">🧸 SugarPlush 🎀</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href='db_maintain.html'> DB Maintenance</a>
+            <a href="logout.php">Logout</a>
+        </nav>
+    </header>
+
+    <section class="db-container select-records">
+        <h2>📋 Select Records</h2>
+
+        <label for="tableSelect">Choose a Table:</label>
+        <select id="tableSelect"></select>
+
+        <button class="db-btn" onclick="fetchTableData()">Load Records</button>
+
+        <table class="db-table">
+            <thead>
+                <tr id="tableHeaders"></tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+    </section>
+
+    <script>
+        function fetchTables() {
+            fetch("db_select.php?fetch_tables=true")
+                .then(response => response.json())
+                .then(data => {
+                    let tableSelect = document.getElementById("tableSelect");
+                    tableSelect.innerHTML = "";
+
+                    data.tables.forEach(table => {
+                        let option = document.createElement("option");
+                        option.value = table;
+                        option.textContent = table;
+                        tableSelect.appendChild(option);
+                    });
+                })
+                .catch(error => console.error("Error fetching tables:", error));
+        }
+
+        function fetchTableData() {
+            let tableName = document.getElementById("tableSelect").value;
+            fetch(`db_select.php?table=${tableName}`)
+                .then(response => response.json())
+                .then(data => {
+                    let headersRow = document.getElementById("tableHeaders");
+                    let tableBody = document.getElementById("tableBody");
+        
+                    headersRow.innerHTML = "";
+                    tableBody.innerHTML = "";
+        
+                    const hiddenColumns = ["password", "expiry_date", "cvv"];
+                    let visibleColumns = data.columns.filter(column => !hiddenColumns.includes(column.name));
+                    let tableClass = (tableName === "users") ? "db-table users-table" : "db-table";
+        
+                    let tableElement = document.querySelector(".db-table");
+                    tableElement.className = tableClass; 
+        
+                    visibleColumns.forEach(column => {
+                        let th = document.createElement("th");
+                        th.textContent = column.name;
+                        headersRow.appendChild(th);
+                    });
+        
+                    data.records.forEach(record => {
+                        let tr = document.createElement("tr");
+                        visibleColumns.forEach(column => {
+                            let td = document.createElement("td");
+                            
+                            if (column.name === "card_number" && record[column.name]) {
+                                let cardNum = record[column.name];
+                                td.textContent = "•••• •••• •••• " + cardNum.slice(-4);
+                            } else {
+                                td.textContent = record[column.name] || "N/A";
+                            }
+        
+                            tr.appendChild(td);
+                        });
+                        tableBody.appendChild(tr);
+                    });
+                })
+                .catch(error => console.error("Error fetching table data:", error));
+        }
+        
+            
+
+        document.addEventListener("DOMContentLoaded", fetchTables);
+    </script>
+</body>
+</html>

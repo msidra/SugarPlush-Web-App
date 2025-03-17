@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In to Track Delivery – SugarPlush</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1 class="logo">🧸 SugarPlush 🎀</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="signup.html">Sign Up</a>
+            <a href="delivery-signin.html">Sign In for Delivery</a>
+        </nav>
+    </header>
+
+    <section class="signin">
+        <h2>🎀 Sign In to Track Your Delivery</h2>
+        <input type="email" id="delivery-signin-email" placeholder="Email">
+        <input type="password" id="delivery-signin-password" placeholder="Password">
+        <button class="btn" onclick="loginForDelivery()">Sign In 📦</button>
+    </section>
+
+    <script>
+        function loginForDelivery() {
+            const email = document.getElementById("delivery-signin-email").value;
+            const password = document.getElementById("delivery-signin-password").value;
+
+            if (!email || !password) {
+                alert("Please enter valid login details.");
+                return;
+            }
+
+            const storedPassword = localStorage.getItem(email);
+
+            if (storedPassword === null) {
+                alert("No account found. Redirecting to sign-up...");
+                window.location.href = "signup.html"; 
+            } else if (storedPassword === password) {
+                localStorage.setItem("loggedInUser", email);
+                alert("Login successful! Redirecting to delivery tracking.");
+                window.location.href = "delivery.html"; 
+            } else {
+                alert("Incorrect password! Please try again.");
+            }
+        }
+    </script>
+
+    <footer>
+        <p>© 2025 SugarPlush. All Rights Reserved. 🎀</p>
+    </footer>
+    
+</body>
+</html>

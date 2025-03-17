@@ -1,0 +1,17 @@
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.hero h2 {
+    animation: fadeIn 2s ease-in-out;
+}
+
+.btn {
+    animation: bounce 1.5s infinite;
+}

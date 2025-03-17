@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SugarPlush – Shop Plushies 🧸</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="cart.js" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1 class="logo">🧸 SugarPlush 🎀</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="shopping.html">Shop Plushies</a>
+            <a href="payment.html">Checkout</a>
+            <a href="signin.html">Sign In</a>
+            <a href="signup.html">Sign Up</a>
+            <a href="about.html">About Us</a>
+        </nav>
+    </header>
+    
+    <section class="shop">
+        <h1>💖 Pick Your Plushie 💖</h1>
+        <div class="shop-items">
+            <div class="item plushie-item" data-name="Cow Plushy" data-price="25" data-image="https://i.pinimg.com/736x/da/71/fe/da71fee1960d46dda65011cb5fbac93d.jpg" draggable="true" ondragstart="handleDragStart(event)">
+                <img src="https://i.pinimg.com/736x/da/71/fe/da71fee1960d46dda65011cb5fbac93d.jpg" alt="Cow Plushy">
+                <p>🐮  MooMoo - $25</p>
+            </div>
+
+            <div class="item plushie-item" data-name="Unicorn Plushy" data-price="20" data-image="https://i.pinimg.com/736x/50/3d/18/503d18a3561fadaeb60c5a93ce1e4ebc.jpg" draggable="true" ondragstart="handleDragStart(event)">
+                <img src="https://i.pinimg.com/736x/50/3d/18/503d18a3561fadaeb60c5a93ce1e4ebc.jpg" alt="Unicorn Plushy">
+                <p>🦄 Unicorn Plushy - $20</p>
+            </div>
+
+            <div class="item plushie-item" data-name="Cat Plushy" data-price="18" data-image="https://i.pinimg.com/736x/ba/29/79/ba29790107f4599b5382d23e745b2cee.jpg" draggable="true" ondragstart="handleDragStart(event)">
+                <img src="https://i.pinimg.com/736x/ba/29/79/ba29790107f4599b5382d23e745b2cee.jpg" alt="Cat Plush">
+                <p>🐱 Aristocat - $18</p>    
+            </div>
+
+            <div class="item plushie-item"  data-name="Penguin Plushy" data-price="22" data-image="https://i.pinimg.com/736x/21/35/8d/21358d9c94f2a1046e42d3a363250971.jpg" draggable="true" ondragstart="handleDragStart(event)">
+                <img src="https://i.pinimg.com/736x/21/35/8d/21358d9c94f2a1046e42d3a363250971.jpg" alt="Penguin Plush" class="plush-img">
+                <p>🐧 Pingu - $22</p>
+            </div>
+            
+            <div class="item plushie-item"  data-name="Zebra Plushy" data-price="32" data-image="https://i.pinimg.com/736x/c0/f9/56/c0f9566ddd02ee6eb877f4db0be16125.jpg" draggable="true" ondragstart="handleDragStart(event)">
+                <img src="https://i.pinimg.com/736x/c0/f9/56/c0f9566ddd02ee6eb877f4db0be16125.jpg" alt="Zebra Plush" class="plush-img">
+                <p>🦓 Marty - $32</p>
+            </div>
+
+            <div class="item plushie-item"  data-name="Lion Plushy" data-price="45" data-image="https://i.pinimg.com/736x/50/d8/39/50d83913d62ee3f5debf2c5a025519eb.jpg" draggable="true" ondragstart="handleDragStart(event)">
+                <img src="https://i.pinimg.com/736x/50/d8/39/50d83913d62ee3f5debf2c5a025519eb.jpg" alt="Lion Plush" class="plush-img">
+                <p>🦁 Simba - $45</p>
+            </div>
+
+            <div class="item plushie-item"  data-name="Bunny Plushy" data-price="25" data-image="https://i.pinimg.com/736x/14/9f/ef/149fefff3be2e123a00aa5fabdd7d5ec.jpg" draggable="true" ondragstart="handleDragStart(event)">
+                <img src="https://i.pinimg.com/736x/14/9f/ef/149fefff3be2e123a00aa5fabdd7d5ec.jpg" alt="Bunny Plush" class="plush-img">
+                <p>🐰 Bugs Bunny - $25</p>
+            </div>
+
+            <div class="item plushie-item" data-name="Dog Plushy" data-price="15" data-image="https://i.pinimg.com/736x/0f/b3/7c/0fb37c7a5681d00b54b2533c48c2b932.jpg" draggable="true" ondragstart="handleDragStart(event)">           
+                <img src="https://i.pinimg.com/736x/0f/b3/7c/0fb37c7a5681d00b54b2533c48c2b932.jpg" alt="Dog Plush" class="plush-img">
+                <p>🐶 Clifford - $15</p>
+            </div>
+
+
+        </div>
+    </section>
+
+    <!-- Shopping Cart Sidebar -->
+    <aside class="cart-sidebar">
+        <div id="cart-drop-area">
+            <p class="cart-placeholder">Grab yours here! 🧸</p>
+        </div>
+    </aside>
+
+    <h1 class="cart-title">🛒 Your Cart</h1>
+
+    <section class="cart-container">
+        <!-- Cart Items -->
+        <div id="cart-items"></div>
+
+        <!-- Cart Summary -->
+        <div class="cart-summary">
+            <h3>Total: <span id="cart-total">$0</span></h3>
+            <button class="checkout-btn" onclick="redirectToCheckout()">Proceed to Checkout! </button>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 SugarPlush. All Rights Reserved. 🎀</p>
+    </footer>
+
+</body>
+</html>

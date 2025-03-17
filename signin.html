@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SugarPlush – Sign In 🎀</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1 class="logo">🧸 SugarPlush 🎀</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="signup.html">Sign Up</a>
+            <a href="about.html">About Us</a>
+        </nav>
+    </header>
+
+    <section class="signin">
+        <h2>🎀 Welcome Back!</h2>
+
+        <form id="signin-form">
+            <div class="input-container">
+                <input type="email" name="email" id="signin-email" placeholder="Email" required>
+            </div>
+
+            <div class="input-container">
+                <input type="password" name="password" id="signin-password" placeholder="Password" required>
+            </div>
+
+            <button type="submit" class="btn">Sign In 🎀</button>
+        </form>
+
+        <p id="error-message" style="color: red;"></p>
+    </section>
+
+    <script>
+        document.getElementById("signin-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+        
+            let email = document.getElementById("signin-email").value;
+            let password = document.getElementById("signin-password").value;
+        
+            fetch("signin.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "success") {
+                    localStorage.setItem("loggedInUser", data.email);
+                    localStorage.setItem("user_id", data.user_id);
+                    window.location.href = "index.html";
+                } else {
+                    document.getElementById("error-message").innerText = `❌ Error: ${data.message}`;
+                }
+            })
+            .catch(error => {
+                console.error("Login error:", error);
+                document.getElementById("error-message").innerText = "❌ Error: Unable to process login.";
+            });
+        });
+    </script>
+
+    <footer>
+        <p>© 2025 SugarPlush. All Rights Reserved. 🎀</p>
+    </footer>
+</body>
+</html>

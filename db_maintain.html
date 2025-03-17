@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Maintenance</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <h1 class="logo">🧸 SugarPlush 🎀</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="logout.php">Logout</a>
+        </nav>
+    </header>
+
+    <section class="db-container">
+        <h2>🛠 Database Maintenance</h2>
+    
+        <label for="db-action">Select Operation:</label>
+        <select id="db-action">
+            <option value="insert">➕ Insert</option>
+            <option value="delete">❌ Delete</option>
+            <option value="select">📋 Select</option>
+            <option value="update">📝Update</option>
+        </select>
+    
+        <button class="db-btn" onclick="navigateToOperation()">Proceed</button>
+    </section>
+    
+
+    <script>
+        function navigateToOperation() {
+            let action = document.getElementById("db-action").value;
+            window.location.href = `db_${action}.html`;
+        }
+    </script>
+
+    <footer>
+        <p>© 2025 SugarPlush. All Rights Reserved. 🎀</p>
+    </footer>
+
+</body>
+</html>
