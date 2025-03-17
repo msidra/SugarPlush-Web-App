@@ -1,6 +1,50 @@
-# SugarPlush-Web-App
+### Project Objectives  
 
-Setup Instructions:
+The **SugarPlush Online Service Platform (OSP)** is an e-commerce web application designed to give users a smooth and enjoyable online shopping experience buying plushies. The project was built in two major phases:  
+
+- **Iteration I**: Focused on front-end development, making the site visually appealing and interactive using **HTML, JavaScript, and CSS**. This phase set up core features like item selection and a shopping cart with a drag-and-drop function.  
+- **Iteration II**: Focused on back-end development, adding database integration and server-side functionality using **PHP and MySQL**. This phase introduced user authentication, secure payment processing, and admin tools for managing products and orders.  
+
+##-+# Key Features  
+
+1. **Shopping System**  
+   - Users can browse plushie products and **add them to their cart** with an easy-to-use drag-and-drop feature.  
+   - The cart dynamically updates, letting users modify quantities or remove items before checkout.  
+
+2. **Delivery Tracking**  
+   - Integrated with **Google Maps API**, the platform shows users their **order delivery route** in real time.  
+   - Users can track estimated arrival times and optimized routes for deliveries.  
+
+3. **Payment Processing**  
+   - Secure **card payments** allow customers to complete purchases easily when signing up.  
+   - Users can use saved payment methods for faster checkout.  
+
+4. **User Authentication & Account Management**  
+   - Users can **sign up and log in** securely with their email and password.  
+   - Personal accounts store **delivery addresses, payment details, and order history** for convenience.  
+
+5. **Database Integration**  
+   - A **MySQL database** stores user profiles, orders, products, and payment details.  
+   - Data is retrieved and updated dynamically to keep the system running smoothly.  
+
+6. **Admin Dashboard**  
+   - Site admins have tools to **add, update, and delete products** in the store.  
+
+7. **Cross-Browser Compatibility**  
+   - The site works smoothly on major browsers like **Chrome, Firefox, and Edge**.  
+
+### Technologies Used  
+
+- **Frontend (Iteration I)**  
+  - **Languages**: **HTML, JavaScript, CSS**  
+  - **Main Features**: Interactive UI, shopping cart, drag-and-drop item selection  
+
+- **Backend (Iteration II)**  
+  - **Languages**: **PHP, SQL (MySQL)**  
+  - **Tools**: **phpMyAdmin** for database management  
+  - **Main Features**: User authentication, secure transactions, and dynamic content updates  
+
+**Setup Instructions:**
 
 1. Download the application folder
 2. Save in XAMPP htdocs file 
