@@ -1,11 +1,11 @@
-### Project Objectives  
+## Project Objectives  
 
 The **SugarPlush Online Service Platform (OSP)** is an e-commerce web application designed to give users a smooth and enjoyable online shopping experience buying plushies. The project was built in two major phases:  
 
 - **Iteration I**: Focused on front-end development, making the site visually appealing and interactive using **HTML, JavaScript, and CSS**. This phase set up core features like item selection and a shopping cart with a drag-and-drop function.  
 - **Iteration II**: Focused on back-end development, adding database integration and server-side functionality using **PHP and MySQL**. This phase introduced user authentication, secure payment processing, and admin tools for managing products and orders.  
 
-## Key Features  
+### Key Features  
 
 1. **Shopping System**  
    - Users can browse plushie products and **add them to their cart** with an easy-to-use drag-and-drop feature.  
