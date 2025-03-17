@@ -1,11 +1,11 @@
-## Project Objectives  
+## Project Description  
 
 The **SugarPlush Online Service Platform (OSP)** is an e-commerce web application designed to give users a smooth and enjoyable online shopping experience buying plushies. The project was built in two major phases:  
 
 - **Iteration I**: Focused on front-end development, making the site visually appealing and interactive using **HTML, JavaScript, and CSS**. This phase set up core features like item selection and a shopping cart with a drag-and-drop function.  
 - **Iteration II**: Focused on back-end development, adding database integration and server-side functionality using **PHP and MySQL**. This phase introduced user authentication, secure payment processing, and admin tools for managing products and orders.  
 
-### Key Features  
+## Key Features  
 
 1. **Shopping System**  
    - Users can browse plushie products and **add them to their cart** with an easy-to-use drag-and-drop feature.  
@@ -33,7 +33,7 @@ The **SugarPlush Online Service Platform (OSP)** is an e-commerce web applicatio
 7. **Cross-Browser Compatibility**  
    - The site works smoothly on major browsers like **Chrome, Firefox, and Edge**.  
 
-### Technologies Used  
+## Technologies Used  
 
 - **Frontend (Iteration I)**  
   - **Languages**: **HTML, JavaScript, CSS**  
@@ -44,19 +44,19 @@ The **SugarPlush Online Service Platform (OSP)** is an e-commerce web applicatio
   - **Tools**: **phpMyAdmin** for database management  
   - **Main Features**: User authentication, secure transactions, and dynamic content updates  
 
-**Setup Instructions:**
+## Setup Instructions:
 
 1. Download the application folder
 2. Save in XAMPP htdocs file 
 3. Run the file "database.php" to set up the database
 4. Run the file "index.html" to get started 
 
-Logging in as Admin:
+**Logging in as Admin:**
 In order to be able to access DB Maintenance, signup with the email "4amaryam@gmail.com" (all other sign 
 up information is up to you, it is only essential to use that specfic email). DB Maintainance will be found in 
 the nav bar of index.html
 
-Logging out: 
+**Logging out:** 
 In order to log out, you must be signed in and on index.html(home page) an icon will appear which can be clicked 
 on to show log out
 
